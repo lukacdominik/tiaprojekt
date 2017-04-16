@@ -1,0 +1,35 @@
+{
+  "name": "tubeheadz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node bin/test",
+    "start": "node bin/dev",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && mkdir dist && babel server -s -d dist",
+    "production": "npm run build && node bin/production"
+  },
+  "author": "Dominik Lukac",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "express-mysql-session": "^1.2.0",
+    "express-session": "^1.15.2",
+    "express-validator": "^3.1.3",
+    "moment": "^2.18.1",
+    "mysql": "^2.13.0"
+  }
+}

@@ -1,0 +1,35 @@
+<h1>TUBEHEADZ</h1>
+
+<h2>Welcome to Tubeheadz!</h2>
+<p>Gain insight into your daily YouTube-watching habits with an automatic tracker and a private profile for your statistics.</p>
+
+<h2>{{ title }}</h2>
+
+{{#if success }}
+	<section class="success">
+		<h2>Success!</h2>
+	</section>
+{{else}}
+	<section class="errors">
+		<ul>
+			{{#each errors }}
+				<li>{{ this.msg }}</li>
+			{{/each}}
+		</ul>
+	</section>
+{{/if}}
+
+{{#if loginpage }}
+	{{> login}}
+	<p>
+		<a href="/lostpassword">Forgotten credentials</a>
+	</p>
+	<p>
+		Don't have an account? <a href="/join">Join now</a>!
+	</p>
+{{else}}
+	{{> join}}
+	<p>
+		Already have an account? <a href="/">Log in</a>.
+	</p>
+{{/if}}

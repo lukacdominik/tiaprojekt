@@ -1,0 +1,41 @@
+{{> nav}}
+
+<h1>{{ username }}</h1>
+
+{{#if onMyPage}}
+	{{> tracker}}
+{{else}}
+	{{#unless alreadyFriends}}
+		add_friend_placeholder
+	{{/unless}}
+{{/if}}
+
+<section>
+	<h3>Friends:</h3>
+	{{#if friends}}
+		<ul>
+		{{#each friends}}
+			<li><a href="/user/{{this.username}}">{{this.username}}</a></li>
+		{{/each}}
+		</ul>
+	{{else}}
+		<p>You have no friends yet.</p>
+	{{/if}}
+</section>
+<hr>
+
+<section>
+	{{#if records}}
+		<table>
+		{{#each records}}
+			<tr>
+				<td><b>{{ this.channel_name }}</b> &mdash; {{ this.video_name }}</td>
+				<td><i>[{{ this.video_length }}]</i></td>
+				<td><i>{{ fromNow this.record_timestamp }}</i></td>
+			</tr>
+		{{/each}}
+		</table>
+	{{else}}
+		<div>No public records</div>
+	{{/if}}
+</section>

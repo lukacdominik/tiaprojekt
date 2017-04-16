@@ -1,0 +1,15 @@
+# logs
+*.log
+
+# environment variables (database passwords, tokens, etc)
+.env
+
+# compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# node modules
+node_modules
+
+# sublime
+*.sublime-project
+*.sublime-workspace

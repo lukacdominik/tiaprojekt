@@ -1,0 +1,6 @@
+{{#if session_username}}
+	<form action="/api/logout" method="post">
+		<a href="/profile">{{session_email}}</a> <button type="submit">Logout</button>
+	</form>
+	<hr>
+{{/if}}
