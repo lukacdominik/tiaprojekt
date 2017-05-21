@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const SALT_ROUNDS = 10
 
@@ -16,7 +16,8 @@ controller.post = (request, response) => {
 		})
 		request.session.errors = errors
 		request.session.success = false
-		response.redirect('/')
+		request.session.retryValues = { emailOrUsername }
+		response.redirect('/' + (request.query.next && ('?next=' + encodeURIComponent(request.query.next))))
 	}
 
 	request.db.query('SELECT `username`, `email`, `password` FROM `users` WHERE `users`.`username` = ? OR `users`.`email` = ?', [emailOrUsername, emailOrUsername], (queryResult) => {
@@ -29,7 +30,7 @@ controller.post = (request, response) => {
 			}
 			request.session.username = queryResult[0].username
 			request.session.email = queryResult[0].email
-			response.redirect('/user/' + request.session.username)
+			response.redirect(request.query.next || '/profile')
 		})
 	})
 }

@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const SALT_ROUNDS = 10
 
@@ -20,6 +20,7 @@ controller.post = (request, response) => {
 			if (errors.length > 0) {
 				request.session.errors = errors
 				request.session.success = false
+				request.session.retryValues = { username, email }
 				return response.redirect('/join')
 			}
 			bcrypt.hash(password, SALT_ROUNDS, (err, hash) => {

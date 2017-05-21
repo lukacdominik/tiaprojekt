@@ -1,7 +1,7 @@
-<form action="/api/login" method="post">
+<form action="/api/login{{next}}" method="post">
 	<div class="input">
 		<label for="emailOrUsername">E-mail or username</label>
-		<input type="text" id="emailOrUsername" name="emailOrUsername">
+		<input type="text" id="emailOrUsername" name="emailOrUsername" value="{{retryValues.emailOrUsername}}">
 	</div>
 	<div class="input">
 		<label for="password">Password</label>

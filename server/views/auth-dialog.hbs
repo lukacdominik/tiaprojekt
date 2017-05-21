@@ -1,0 +1,14 @@
+{{> auth-nav}}
+
+<h1>Connect application</h1>
+
+<section>
+	<p>
+		Application <strong><a href="{{app.website}}" target="_blank">{{app.name}}</a></strong> wants to access your Tubeheadz account.
+		You should only give it access if you know and trust this application.
+	</p>
+	<form action="/api/authorize" method="post">
+		<button type="submit">Allow access</button>
+		<a href="{{app.cancel_uri}}">Cancel</a>
+	</form>
+</section>

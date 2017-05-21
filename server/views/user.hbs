@@ -1,13 +1,56 @@
 {{> nav}}
-
+<div id="page-wrapper">
 <h1>{{ username }}</h1>
-
-{{#if onMyPage}}
-	{{> tracker}}
-{{else}}
-	{{#unless alreadyFriends}}
-		add_friend_placeholder
-	{{/unless}}
+{{#if session_username}}
+	{{#if onMyPage}}
+		{{#if pendingFriendRequests}}
+			<h3>Pending friend requests:</h3>
+			<ul>
+			{{#each pendingFriendRequests}}
+				<li id="approve-pending-friend-request-li-{{username}}">
+					{{this.username}}
+					<button id="approve-pending-friend-request-button-{{username}}" onclick="approvePendingFriendRequest('{{this.username}}')">Approve</button>
+				</li>
+			{{/each}}
+			</ul>
+			<script>
+				function approvePendingFriendRequest(username) {
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							window.location = "/profile"
+						}
+					}
+					xhttp.open("GET", "/addFriend/" + username, true)
+					xhttp.send()
+				}
+			</script>
+		{{else}}
+			<p>You have no pending friend requests.</p>
+		{{/if}}
+	{{else}}
+		{{#if alreadyFriends}}
+			<p>You are friends</p>
+		{{else}}
+			{{#if friendRequestPending}}
+				<button id="friend-request-button" disabled="true">Friend Request Sent</button>
+			{{else}}
+				<button id="friend-request-button" onclick="sendFriendRequest()">Send Friend Request</button>
+				<script>
+					function sendFriendRequest() {
+						var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								document.getElementById('friend-request-button').disabled = true
+							}
+						}
+						xhttp.open("GET", "/addFriend/{{username}}", true)
+						xhttp.send()
+					}
+				</script>
+			{{/if}}
+		{{/if}}
+	{{/if}}
 {{/if}}
 
 <section>
@@ -29,9 +72,13 @@
 		<table>
 		{{#each records}}
 			<tr>
-				<td><b>{{ this.channel_name }}</b> &mdash; {{ this.video_name }}</td>
-				<td><i>[{{ this.video_length }}]</i></td>
-				<td><i>{{ fromNow this.record_timestamp }}</i></td>
+				<td>
+					<a href="https://www.youtube.com/channel/{{ this.yt_channel_id }}"><b>{{ this.channel_name }}</b></a>
+					&mdash;
+					<a href="https://www.youtube.com/watch?v={{ this.yt_video_id }}">{{ this.video_name }}</a>
+				</td>
+				<td><i>[{{ parseDurationFromSeconds this.record_duration }} / {{ parseDurationFromSeconds this.video_duration }}]</i></td>
+				<td><i>{{ fromNow this.record_timestamp }} </i></td>
 			</tr>
 		{{/each}}
 		</table>
@@ -39,3 +86,4 @@
 		<div>No public records</div>
 	{{/if}}
 </section>
+</div>

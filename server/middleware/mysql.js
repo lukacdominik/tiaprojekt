@@ -21,7 +21,9 @@ const setupMySQL = (req, res, next) => {
 				if (connError) return console.error('MYSQL ERROR while connecting:', connError.stack)
 				const q = conn.query(query, values, (queryError, queryResult, queryFields) => {
 					conn.release()
-					if (queryError) throw queryError
+					if (queryError) {
+						throw queryError
+					}
 					console.log(queryResult)
 					done(queryResult)
 				})
